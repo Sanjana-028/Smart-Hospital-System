@@ -38,3 +38,27 @@ void initbedOccupancy()
         }
     }
 }
+
+void printBedStatus()
+{
+    printf("=================== Bed Occupancy Status ===================\n");
+    for (int w=0;w < NUM_WARDS;w++){
+        int occupied =0;
+        printf("\n%s (Capacity: %d)\n[",wardNames[w],totalBedCapacity[w]);
+        for (int b =0;b < totalBedCapacity;b++){
+            printf("%d",bedOccupancy[w][b]);
+            if (bedOccupancy[w][b] ==1)
+                occupied++;
+        }
+        printf("] -> %d/%d occupied (%.1f%%)\n",occupied,totalBedCapacity[w],(occupied*100.0)/totalBedCapacity[w]);
+    }
+    printf("=============================================================\n");
+}
+int findAvailableBed(int wardIdx)
+{
+    for (int b=0;b <totalBedCapacity[wardIdx];b++){
+        if(bedOccupancy[wardIdx][b] ==0)
+            return b;
+    }
+    return -1;
+}
