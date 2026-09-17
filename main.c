@@ -15,12 +15,19 @@ const float feesOfSpecialty[NUM_SPECIALITIES] ={1500.00,2500.00,4500.00,5000.00}
 const int specialtyTimePerPatient[NUM_SPECIALITIES] ={15,20,30,30};
 const int specialtyDailyCap[NUM_SPECIALITIES] ={30,20,12,10};
 
+int specialtyQueueCount[NUM_SPECIALITIES] ={0,0,0,0};
+
 const char *wardNames[NUM_WARDS] ={"General Ward","Paediatric Ward","Surgical Ward","ICU (Intensive Care Unit)"};
 const float dailyBedRate[NUM_WARDS] ={3000.00,6000.00,12000.00,25000.00};
 const int totalBedCapacity[NUM_WARDS] ={20,10,10,05};
 
 /* bedOccupancy[wardIndex][bedIndex] :- 0=Available , 1=Occupied */
 int bedOccupancy[NUM_WARDS][MAX_BEDS_PER_WARD];
+int findAvailableBed(int wardIdx);
+
+
+float calculateWaitTime(int specialtyIdx);
+
 
 int patientCount=0;
 
@@ -87,6 +94,11 @@ int findAvailableBed(int wardIdx)
     return -1;
 }
 
+float calculateWaitTime(int specialtyIdx)
+{
+    return specialtyQueueCount[specialtyIdx] * (float) specialtyTimePerPatient[specialtyIdx];
+}
+
 void registerPatient()
 {
     int i=patientCount;
@@ -108,4 +120,8 @@ void registerPatient()
     int specialtyID;
     scanf("%d", &specialtyID);
     patientSpecialtyIdx[i] = specialtyID - 1;
+
+
+    patientWaitTime[i] = calculateWaitTime(patientSpecialtyIdx[i]);
+    specialtyQueueCount[patientSpecialtyIdx[i]]++;
 }
