@@ -27,6 +27,10 @@ int findAvailableBed(int wardIdx);
 
 
 float calculateWaitTime(int specialtyIdx);
+float calculateSurCharge(int urgency,float baseFee);
+float calculateWardCost(int admitted,int daysAdmitted,int wardIdx);
+
+
 
 
 int patientCount=0;
@@ -98,6 +102,28 @@ float calculateWaitTime(int specialtyIdx)
 {
     return specialtyQueueCount[specialtyIdx] * (float) specialtyTimePerPatient[specialtyIdx];
 }
+
+float calculateSurCharge(int urgency,float baseFee)
+{
+    if (urgency ==2){
+         return baseFee*0.20;
+    }
+    if (urgency ==3){
+        return baseFee*0.50;
+    }
+    return 0.0;
+}
+
+float calculateWardCost(int admitted,int daysAdmitted,int wardIdx)
+{
+    if (!admitted){
+        return 0.0;
+    }
+    return daysAdmitted*dailyBedRate[wardIdx];
+}
+
+
+
 
 void registerPatient()
 {
