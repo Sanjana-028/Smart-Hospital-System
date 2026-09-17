@@ -5,19 +5,40 @@
 #define NUM_SPECIALITIES 4
 #define NUM_WARDS 4
 #define MAX_BEDS_PER_WARD 20
+#define MAX_PATIENTS 157
+#define MAX_NAME_LEN 50
 
 
-const char *namesOfSpecialty[NUM_SPECIALITIES] ={"Genaral Practice (OPD)","Paediatrics","Cardiology","Neurology"};
+
+const char *namesOfSpecialty[NUM_SPECIALITIES] ={"General Practice (OPD)","Paediatrics","Cardiology","Neurology"};
 const float feesOfSpecialty[NUM_SPECIALITIES] ={1500.00,2500.00,4500.00,5000.00};
 const int specialtyTimePerPatient[NUM_SPECIALITIES] ={15,20,30,30};
 const int specialtyDailyCap[NUM_SPECIALITIES] ={30,20,12,10};
 
-const char *wardNames[NUM_WARDS] ={"Genaral Ward","Paediatric Ward","Surgical Ward","ICU (Intensive Care Unit)"};
+const char *wardNames[NUM_WARDS] ={"General Ward","Paediatric Ward","Surgical Ward","ICU (Intensive Care Unit)"};
 const float dailyBedRate[NUM_WARDS] ={3000.00,6000.00,12000.00,25000.00};
 const int totalBedCapacity[NUM_WARDS] ={20,10,10,05};
 
 /* bedOccupancy[wardIndex][bedIndex] :- 0=Available , 1=Occupied */
 int bedOccupancy[NUM_WARDS][MAX_BEDS_PER_WARD];
+
+int patientCount=0;
+
+char patientName[MAX_PATIENTS][MAX_NAME_LEN];
+int patientAge[MAX_PATIENTS];
+int patientUrgency[MAX_PATIENTS]; /*1.Normal 2.Urgent 3.Critical*/
+int patientSpecialtyIdx[MAX_PATIENTS];
+int patientAdmitted[MAX_PATIENTS]; /*1=Yes, 0=No (OPD only)*/
+int patientWardIdx[MAX_PATIENTS];
+int patientBedNo[MAX_PATIENTS];
+int patientDaysAdmitted[MAX_PATIENTS];
+float patientBaseFee[MAX_PATIENTS];
+float patientSurcharge[MAX_PATIENTS];
+float patientWardCost[MAX_PATIENTS];
+float patientGrossTotal[MAX_PATIENTS];
+float patientDiscount[MAX_PATIENTS];
+float patientFinalAmount[MAX_PATIENTS];
+float patientWaitTime[MAX_PATIENTS];
 
 
 void initbedOccupancy();
