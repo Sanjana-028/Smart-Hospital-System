@@ -43,6 +43,9 @@ float patientWaitTime[MAX_PATIENTS];
 
 void initbedOccupancy();
 
+void registerPatient();
+
+
 
 int main()
 {
@@ -82,4 +85,27 @@ int findAvailableBed(int wardIdx)
             return b;
     }
     return -1;
+}
+
+void registerPatient()
+{
+    int i=patientCount;
+    printf("\n");
+    printf("-------------------New Patient Registration--------------------\n");
+    printf("\n");
+    printf("Patient's Name(with initials): ");
+    scanf("%[^\n]", patientName[i]);
+    printf("Patient's Age: ");
+    scanf("%d", &patientAge[i]);
+    printf("Triage Level (1=Normal, 2=Urgent, 3=Critical): ");
+    scanf("%d", &patientUrgency[i]);
+    printf("Specialty (");
+    for (int s=0;s < NUM_SPECIALITIES;s++)
+    {
+        printf("%d= %s", s +1,namesOfSpecialty[s]);
+    }
+    printf("): ");
+    int specialtyID;
+    scanf("%d", &specialtyID);
+    patientSpecialtyIdx[i] = specialtyID - 1;
 }
