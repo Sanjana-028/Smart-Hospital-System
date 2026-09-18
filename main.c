@@ -55,6 +55,8 @@ float calculateDiscount(int age,float grossTotal);
 void printBillReceipt(int i);
 
 void registerPatient();
+void printPriorityList();
+
 
 
 
@@ -206,3 +208,32 @@ void registerPatient()
     patientFinalAmount[i] =patientGrossTotal[i] - patientDiscount[i];
 }
 
+void printPriorityList()
+{
+    if (patientCount == 0){
+       printf("\nNo patients registered yet.\n");
+       return;
+    }
+    int order[MAX_PATIENTS];
+    for (int i=0;i < patientCount;i++){
+        order[i]=i;
+    }
+    for (int i=1;i < patientCount;i++){
+        int key=order[i];
+        int keyUrgency=patientUrgency[i];
+        int j=i-1;
+        while (j >= 0 && patientUrgency[order[j]]< keyUrgency){
+            order[j+1] =order[j];
+            j--;
+        }
+        order[j+1] = order[j];
+    }
+    printf("\n=========== Patient's Priority List==============\n");
+    printf("\n");
+    for (int r=0;r < patientCount;r++){
+        int i = order[r];
+        printf("%2d. PAT-%-6d %-20s     urgency : Level %d      Final Bill :LKR %.2f\n", r+1,1000 +i+1,patientName[i],patientUrgency[i],patientFinalAmount[i]);
+    }
+    printf("\n");
+    printf("===================================================\n");
+}
