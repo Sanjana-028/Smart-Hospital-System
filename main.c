@@ -29,6 +29,8 @@ int findAvailableBed(int wardIdx);
 float calculateWaitTime(int specialtyIdx);
 float calculateSurCharge(int urgency,float baseFee);
 float calculateWardCost(int admitted,int daysAdmitted,int wardIdx);
+float calculateDiscount(int age,float grossTotal);
+
 
 
 
@@ -122,6 +124,14 @@ float calculateWardCost(int admitted,int daysAdmitted,int wardIdx)
     return daysAdmitted*dailyBedRate[wardIdx];
 }
 
+float calculateDiscount(int age,float grossTotal)
+{
+    if (age < 5 || age > 65){
+        return grossTotal*0.15;
+    }
+    return 0.0;
+}
+
 
 
 
@@ -150,4 +160,12 @@ void registerPatient()
 
     patientWaitTime[i] = calculateWaitTime(patientSpecialtyIdx[i]);
     specialtyQueueCount[patientSpecialtyIdx[i]]++;
+
+    patientBaseFee[i] =feesOfSpecialty[patientSpecialtyIdx[i]];
+    patientSurcharge[i] =calculateSurCharge(patientUrgency[i],patientBaseFee[i]);
+    patientWardCost[i] =calculateWardCost(patientAdmitted[i],patientDaysAdmitted[i],patientWardIdx[i]);
+    patientGrossTotal[i] =patientBaseFee[i] + patientSurcharge[i] + patientWardCost[i];
+    patientDiscount[i] =calculateDiscount(patientAge[i],patientGrossTotal[i]);
+    patientFinalAmount[i] =patientGrossTotal[i] - patientDiscount[i];
 }
+
