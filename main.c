@@ -26,6 +26,7 @@ int bedOccupancy[NUM_WARDS][MAX_BEDS_PER_WARD];
 int findAvailableBed(int wardIdx);
 
 int patientCount=0;
+int choice=0;
 
 char patientName[MAX_PATIENTS][MAX_NAME_LEN];
 int patientAge[MAX_PATIENTS];
@@ -47,6 +48,7 @@ float patientWaitTime[MAX_PATIENTS];
 void initbedOccupancy();
 void saveBedSatus();
 void loadBedStatus();
+void printBedStatus();
 
 int findAvailableBed(int wardIdx);
 
@@ -60,15 +62,32 @@ void appendPatientRecord(int i);
 void registerPatient();
 void printPriorityList();
 void printReports();
-
-
-
-
+void displayMainMenu();
 
 int main()
 {
     initbedOccupancy();
     loadBedStatus();
+    do {
+        displayMainMenu();
+
+        switch(choice)
+        {
+            case 1: registerPatient();
+                    break;
+            case 2: printBedStatus();
+                    break;
+            case 3: printPriorityList();
+                    break;
+            case 4: printReports();
+                    break;
+            case 5: saveBedSatus();
+                    printf("Bed Status Saved.\nGood Bye!\n");
+                    break;
+            default :
+                printf("Invalid Choice!\nPlease Try Again.\n");
+        }
+    }while (choice !=5);
 
     return 0;
 }
@@ -328,4 +347,25 @@ void printReports()
     printf("\nHighest-paying patient : %s (PAT-%d) - LKR %.2f\n", patientName[topPatient],1000 + topPatient + 1,patientFinalAmount[topPatient]);
     printf("\n");
     printf("========================================================\n");
+}
+
+void displayMainMenu()
+{
+    printf("===============================================================================\n");
+    printf("\n");
+    printf("                      ~KING'S LANDING SMART HOSPITAL~                          \n");
+    printf("\n");
+    printf("===============================================================================\n");
+    printf("\n");
+    printf("\"Health is the greatest gift, contentment the greatest wealth.\"\v Lord Buddha\n");
+    printf("Welcome to the King's landing Smart hospital!\n");
+    printf("\n");
+    printf("1. Register Patient\n");
+    printf("2. View Bed Occupancy Status\n");
+    printf("3. View Priority List(Triage order)\n");
+    printf("4. Generate Summary Report\n");
+    printf("5. Exit\n");
+    printf("\n");
+    printf("Please enter here your choice: ");
+    scanf("%d", &choice);
 }
