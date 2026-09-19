@@ -45,6 +45,9 @@ float patientWaitTime[MAX_PATIENTS];
 
 
 void initbedOccupancy();
+void saveBedSatus();
+void loadBedStatus();
+
 int findAvailableBed(int wardIdx);
 
 float calculateWaitTime(int specialtyIdx);
@@ -53,7 +56,7 @@ float calculateWardCost(int admitted,int daysAdmitted,int wardIdx);
 float calculateDiscount(int age,float grossTotal);
 
 void printBillReceipt(int i);
-
+void appendPatientRecord(int i);
 void registerPatient();
 void printPriorityList();
 void printReports();
@@ -65,6 +68,7 @@ void printReports();
 int main()
 {
     initbedOccupancy();
+    loadBedStatus();
 
     return 0;
 }
@@ -126,6 +130,7 @@ void printBedStatus()
     }
     printf("=============================================================\n");
 }
+
 int findAvailableBed(int wardIdx)
 {
     for (int b=0;b <totalBedCapacity[wardIdx];b++){
@@ -207,7 +212,16 @@ void printBillReceipt(int i)
     printf("==================================================================\n");
 }
 
-
+void appendPatientRecord(int i)
+{
+    FILE*fp =fopen("patients_records.txt","a");
+    if(fp == NULL){
+        printf("Warning: Could not write the patient records!\n");
+        return;
+    }
+    fprintf(fp,"PAT-%d,%s,%d,%d,%s%.2f\n", 1000+i+1,patientName[i],patientAge[i],patientUrgency[i],namesOfSpecialty[patientSpecialtyIdx[i]],patientFinalAmount[i]);
+    fclose(fp);
+}
 
 void registerPatient()
 {
