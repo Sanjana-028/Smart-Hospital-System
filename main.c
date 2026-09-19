@@ -78,6 +78,39 @@ void initbedOccupancy()
     }
 }
 
+void saveBedSatus()
+{
+    FILE*fp =fopen("beds_status.txt","w");
+    if(fp == NULL){
+        printf("Warning: Could not save the bed status!\n");
+        return;
+    }
+    for(int w=0;w < NUM_WARDS;w++){
+        for(int b=0;b < totalBedCapacity[w];b++){
+            fprintf(fp,"%d", bedOccupancy[w][b]);
+        }
+        fprintf(fp,"\n");
+    }
+    fclose(fp);
+}
+
+void loadBedStatus()
+{
+    FILE*fp =fopen("beds_status.txt","r");
+    if(fp ==NULL){
+        return;
+    }
+    for (int w=0;w< NUM_WARDS;w++){
+        for (int b=0;b< totalBedCapacity[w];b++){
+            if (fscanf(fp,"%d",&bedOccupancy[w][b]) !=1){
+                fclose(fp);
+                return;
+            }
+        }
+    }
+    fclose(fp);
+}
+
 void printBedStatus()
 {
     printf("=================== Bed Occupancy Status ===================\n");
