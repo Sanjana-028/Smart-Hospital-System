@@ -56,6 +56,8 @@ void printBillReceipt(int i);
 
 void registerPatient();
 void printPriorityList();
+void printReports();
+
 
 
 
@@ -236,4 +238,35 @@ void printPriorityList()
     }
     printf("\n");
     printf("===================================================\n");
+}
+
+void printReports()
+{
+    if (patientCount ==0){
+        printf("\nNo patients registered yet.Nothing to report.\n");
+        return;
+    }
+    int countByUrgency[4] = {0,0,0,0};
+    int topPatient =0;
+    float totalRevenue =0.0;
+    float totalDiscount =0.0;
+
+    for(int i=0; i< patientCount;i++){
+        countByUrgency[patientUrgency[i]]++;
+        totalRevenue += patientFinalAmount[i];
+        totalDiscount += patientDiscount[i];
+        if (patientFinalAmount[i] > patientFinalAmount[topPatient]){
+            topPatient =i;
+        }
+    }
+    printf("\n================Summary Report======================\n");
+    printf("\n");
+    printf("Total of Patients registered  : %d\n", patientCount);
+    printf("Level 1 (Normal)        : %d\n", countByUrgency[1]);
+    printf("Level 2 (urgent)        : %d\n", countByUrgency[2]);
+    printf("Level 3 (Critical)      : %d\n", countByUrgency[3]);
+    printf("Total Revenue Earned    :LKR %.2f\n", totalRevenue);
+    printf("Total Discounts Granted :LKR %.2f\n", totalDiscount);
+
+
 }
