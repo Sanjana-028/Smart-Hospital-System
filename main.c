@@ -267,6 +267,18 @@ void printReports()
     printf("Level 3 (Critical)      : %d\n", countByUrgency[3]);
     printf("Total Revenue Earned    :LKR %.2f\n", totalRevenue);
     printf("Total Discounts Granted :LKR %.2f\n", totalDiscount);
-
-
+    printf("\n");
+    printf("Bed Occupancy per Ward  :\n");
+    for (int w=0;w < NUM_WARDS; w++){
+        int occupied =0;
+        for (int b=0; b< totalBedCapacity[w];b++){
+            if (bedOccupancy[w][b]){
+                occupied++;
+            }
+        }
+        printf(" %-25s : %d/%d (%.1f%%)\n", wardNames[w],occupied,totalBedCapacity[w],(occupied*100.0)/totalBedCapacity[w]);
+    }
+    printf("\nHighest-paying patient : %s (PAT-%d) - LKR %.2f\n", patientName[topPatient],1000 + topPatient + 1,patientFinalAmount[topPatient]);
+    printf("\n");
+    printf("========================================================\n");
 }
