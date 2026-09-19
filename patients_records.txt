@@ -1,0 +1,10 @@
+PAT-1001,R.A.Tharusha Sihan Sanjana,21,1,General Practice (OPD)4500.00
+PAT-1001,tharu,21,1,General Practice (OPD)4500.00
+PAT-1001,R.A.Tharusha Sihan Sanjana,21,1,General Practice (OPD)4500.00
+PAT-1002,R.A.Sithuki Dilasna,14,2,Paediatrics15000.00
+PAT-1003,R.A.Anura Krishantha,57,3,Cardiology42750.00
+PAT-1004,T.D.Geethika Jayalath,52,1,Neurology105000.00
+PAT-1005,Anura Kumara Dissanayake,45,1,General Practice (OPD)4500.00
+PAT-1006,mahinda rajapaksha,80,2,Paediatrics12750.00
+PAT-1007,Namal Rajapaksha,45,3,Cardiology30750.00
+PAT-1008,Shiranthi Rajapaksha,78,1,Neurology46750.00

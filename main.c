@@ -139,7 +139,7 @@ void printBedStatus()
     for (int w=0;w < NUM_WARDS;w++){
         int occupied =0;
         printf("\n%s (Capacity: %d)\n[",wardNames[w],totalBedCapacity[w]);
-        for (int b =0;b < totalBedCapacity;b++){
+        for (int b =0;b < totalBedCapacity[w];b++){
             printf("%d",bedOccupancy[w][b]);
             if (bedOccupancy[w][b] ==1)
                 occupied++;
@@ -193,9 +193,9 @@ float calculateDiscount(int age,float grossTotal)
 void printBillReceipt(int i)
 {
     char patientID[16];
-    sprintf(patientID,"PAT-%d\n",1000 + i+1);
+    sprintf(patientID,"PAT-%d",1000 + i+1);
 
-    printf("===============================================================\n");
+    printf("\n===============================================================\n");
     printf("\n");
     printf("      King's Landing Smart Hospital Admission & The Bill\n");
     printf("\n");
@@ -203,7 +203,7 @@ void printBillReceipt(int i)
     printf("\n");
     printf("Patient ID    : %s\n", patientID);
     printf("Patient Name  : %s\n", patientName[i]);
-    printf("Patient's Age : %d years\n", patientAge[i],(patientAge[i] < 5 || patientAge[i] > 65 )? "(15% Subsidy Eligible":"");
+    printf("Patient's Age : %d years %s\n", patientAge[i],(patientAge[i] < 5 || patientAge[i] > 65 )? "(15% Subsidy Eligible)":"");
     printf("Specialty     : %s\n",namesOfSpecialty[patientSpecialtyIdx[i]]);
     if (patientAdmitted[i]){
         printf("Assigned Ward   : %s (Bed #%02d)\n", wardNames[patientWardIdx[i]],patientBedNo[i] +1);
@@ -253,7 +253,7 @@ void registerPatient()
     printf("-------------------New Patient Registration--------------------\n");
     printf("\n");
     printf("Patient's Name(with initials): ");
-    scanf("%[^\n]", patientName[i]);
+    scanf(" %[^\n]", patientName[i]);
     printf("Patient's Age: ");
     scanf("%d", &patientAge[i]);
     printf("Triage Level (1=Normal, 2=Urgent, 3=Critical): ");
@@ -334,7 +334,7 @@ void printPriorityList()
             order[j+1] =order[j];
             j--;
         }
-        order[j+1] = order[j];
+        order[j+1] = key;
     }
     printf("\n=========== Patient's Priority List==============\n");
     printf("\n");
