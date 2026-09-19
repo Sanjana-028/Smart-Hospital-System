@@ -23,7 +23,6 @@ const int totalBedCapacity[NUM_WARDS] ={20,10,10,05};
 
 /* bedOccupancy[wardIndex][bedIndex] :- 0=Available , 1=Occupied */
 int bedOccupancy[NUM_WARDS][MAX_BEDS_PER_WARD];
-int findAvailableBed(int wardIdx);
 
 int patientCount=0;
 int choice=0;
@@ -244,6 +243,11 @@ void appendPatientRecord(int i)
 
 void registerPatient()
 {
+    if(patientCount >= MAX_PATIENTS){
+        printf("Patient records are full for today.\n");
+        return;
+    }
+
     int i=patientCount;
     printf("\n");
     printf("-------------------New Patient Registration--------------------\n");
@@ -263,6 +267,39 @@ void registerPatient()
     int specialtyID;
     scanf("%d", &specialtyID);
     patientSpecialtyIdx[i] = specialtyID - 1;
+    printf("Admitted to a ward?(1 =yes , 0=No): ");
+    scanf("%d", &patientAdmitted[i]);
+
+    if(patientAdmitted[i]){
+        printf("Ward (");
+        for (int w=0; w< NUM_WARDS;w++){
+            printf("%d=%s", w+1,wardNames[w]);
+        }
+        printf("): ");
+        int wardID;
+        scanf("%d", &wardID);
+        patientWardIdx[i]=wardID - 1;
+        printf("Days Admitted: ");
+        scanf("%d", &patientDaysAdmitted[i]);
+
+        int bed = findAvailableBed(patientWardIdx[i]);
+        if (bed == -1){
+            printf("Srry, %s is fully occupied.Registering as OPD instead.\n", wardNames[patientWardIdx[i]]);
+            patientAdmitted[i] = 0;
+            patientWardIdx[i] = -1;
+            patientBedNo[i] = -1;
+            patientDaysAdmitted[i] = 0;
+        }
+        else {
+            bedOccupancy[patientWardIdx[i]][bed] = 1;
+            patientBedNo[i] = bed;
+        }
+    }
+    else {
+        patientWardIdx[i] = -1;
+        patientBedNo[i] = -1;
+        patientDaysAdmitted[i] = 0;
+    }
 
 
     patientWaitTime[i] = calculateWaitTime(patientSpecialtyIdx[i]);
@@ -274,6 +311,9 @@ void registerPatient()
     patientGrossTotal[i] =patientBaseFee[i] + patientSurcharge[i] + patientWardCost[i];
     patientDiscount[i] =calculateDiscount(patientAge[i],patientGrossTotal[i]);
     patientFinalAmount[i] =patientGrossTotal[i] - patientDiscount[i];
+    patientCount++;
+    printBillReceipt(i);
+    appendPatientRecord(i);
 }
 
 void printPriorityList()
