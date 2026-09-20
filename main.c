@@ -109,7 +109,7 @@ void saveBedSatus()
     }
     for(int w=0;w < NUM_WARDS;w++){
         for(int b=0;b < totalBedCapacity[w];b++){
-            fprintf(fp,"%d", bedOccupancy[w][b]);
+            fprintf(fp,"%d ", bedOccupancy[w][b]);
         }
         fprintf(fp,"\n");
     }
@@ -124,7 +124,7 @@ void loadBedStatus()
     }
     for (int w=0;w< NUM_WARDS;w++){
         for (int b=0;b< totalBedCapacity[w];b++){
-            if (fscanf(fp,"%d",&bedOccupancy[w][b]) !=1){
+            if (fscanf(fp,"%d ",&bedOccupancy[w][b]) !=1){
                 fclose(fp);
                 return;
             }
@@ -140,9 +140,10 @@ void printBedStatus()
         int occupied =0;
         printf("\n%s (Capacity: %d)\n[",wardNames[w],totalBedCapacity[w]);
         for (int b =0;b < totalBedCapacity[w];b++){
-            printf("%d",bedOccupancy[w][b]);
-            if (bedOccupancy[w][b] ==1)
+            printf("%d ",bedOccupancy[w][b]);
+            if (bedOccupancy[w][b] ==1){
                 occupied++;
+            }
         }
         printf("] -> %d/%d occupied (%.1f%%)\n",occupied,totalBedCapacity[w],(occupied*100.0)/totalBedCapacity[w]);
     }
@@ -152,8 +153,9 @@ void printBedStatus()
 int findAvailableBed(int wardIdx)
 {
     for (int b=0;b <totalBedCapacity[wardIdx];b++){
-        if(bedOccupancy[wardIdx][b] ==0)
+        if(bedOccupancy[wardIdx][b] ==0){
             return b;
+        }
     }
     return -1;
 }
@@ -206,24 +208,24 @@ void printBillReceipt(int i)
     printf("Patient's Age : %d years %s\n", patientAge[i],(patientAge[i] < 5 || patientAge[i] > 65 )? "(15% Subsidy Eligible)":"");
     printf("Specialty     : %s\n",namesOfSpecialty[patientSpecialtyIdx[i]]);
     if (patientAdmitted[i]){
-        printf("Assigned Ward   : %s (Bed #%02d)\n", wardNames[patientWardIdx[i]],patientBedNo[i] +1);
+        printf("Assigned Ward : %s (Bed #%02d)\n", wardNames[patientWardIdx[i]],patientBedNo[i] +1);
     }
     else {
-        printf("Assigned Ward   : outpatient (OPD)\n");
+        printf("Assigned Ward  : outpatient (OPD)\n");
     }
     printf("Urgency Level : Level %d (%s)\n", patientUrgency[i], patientUrgency[i] ==3 ? "Critical": patientUrgency[i] ==2 ? "Urgent":"Normal");
     printf("-----------------------------------------------------------------\n");
     printf("\n");
-    printf("Base Consulation Fee :LKR %.2f\n", patientBaseFee[i]);
-    printf("Emergency Surcharge  :LKR %.2f\n", patientSurcharge[i]);
-    printf("Ward Days Cost(%d days) :LKR %.2f\n", patientDaysAdmitted[i],patientWardCost[i]);
+    printf("Base Consulation Fee    :LKR %.2f\n", patientBaseFee[i]);
+    printf("Emergency Surcharge     :LKR %.2f\n", patientSurcharge[i]);
+    printf("Ward Days Cost(%d days)  :LKR %.2f\n", patientDaysAdmitted[i],patientWardCost[i]);
     printf("------------------------------------------------------------------\n");
     printf("\n");
     printf("Gross Total Bill     :LKR %.2f\n", patientGrossTotal[i]);
     printf("Age Subsidy Discount :LKR %.2f\n", patientDiscount[i]);
     printf("------------------------------------------------------------------\n");
     printf("\n");
-    printf("Final Amount         :LKR %.2f\n",patientFinalAmount[i]);
+    printf("Final Amount           :LKR %.2f\n",patientFinalAmount[i]);
     printf("Estimated Waiting Time : %.2f mins %s\n", patientWaitTime[i],patientWaitTime[i] ==0 ? "(Immediate  Attention)" : "");
     printf("\n");
     printf("Thank you!\nHave a nice day.\n");
@@ -253,7 +255,7 @@ void registerPatient()
     printf("-------------------New Patient Registration--------------------\n");
     printf("\n");
     printf("Patient's Name(with initials): ");
-    scanf(" %[^\n]", patientName[i]);
+    scanf(" %49[^\n]", patientName[i]);
     printf("Patient's Age: ");
     scanf("%d", &patientAge[i]);
     printf("Triage Level (1=Normal, 2=Urgent, 3=Critical): ");
@@ -261,7 +263,7 @@ void registerPatient()
     printf("Specialty (");
     for (int s=0;s < NUM_SPECIALITIES;s++)
     {
-        printf("%d= %s", s +1,namesOfSpecialty[s]);
+        printf(" %d = %s,", s +1,namesOfSpecialty[s]);
     }
     printf("): ");
     int specialtyID;
@@ -273,7 +275,7 @@ void registerPatient()
     if(patientAdmitted[i]){
         printf("Ward (");
         for (int w=0; w< NUM_WARDS;w++){
-            printf("%d=%s", w+1,wardNames[w]);
+            printf(" %d = %s,", w+1,wardNames[w]);
         }
         printf("): ");
         int wardID;
@@ -284,7 +286,7 @@ void registerPatient()
 
         int bed = findAvailableBed(patientWardIdx[i]);
         if (bed == -1){
-            printf("Srry, %s is fully occupied.Registering as OPD instead.\n", wardNames[patientWardIdx[i]]);
+            printf("Sorry, %s is fully occupied.Registering as OPD instead.\n", wardNames[patientWardIdx[i]]);
             patientAdmitted[i] = 0;
             patientWardIdx[i] = -1;
             patientBedNo[i] = -1;
@@ -328,7 +330,7 @@ void printPriorityList()
     }
     for (int i=1;i < patientCount;i++){
         int key=order[i];
-        int keyUrgency=patientUrgency[i];
+        int keyUrgency=patientUrgency[key];
         int j=i-1;
         while (j >= 0 && patientUrgency[order[j]]< keyUrgency){
             order[j+1] =order[j];
