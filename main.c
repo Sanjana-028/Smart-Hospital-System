@@ -338,14 +338,14 @@ void printPriorityList()
         }
         order[j+1] = key;
     }
-    printf("\n=========== Patient's Priority List==============\n");
+    printf("\n============================== Patient's Priority List===========================================\n");
     printf("\n");
     for (int r=0;r < patientCount;r++){
         int i = order[r];
-        printf("%2d. PAT-%-6d %-20s     urgency : Level %d      Final Bill :LKR %.2f\n", r+1,1000 +i+1,patientName[i],patientUrgency[i],patientFinalAmount[i]);
+        printf("%2d. PAT-%-6d %-20s                 urgency : Level %d                Final Bill :LKR %.2f\n", r+1,1000 +i+1,patientName[i],patientUrgency[i],patientFinalAmount[i]);
     }
     printf("\n");
-    printf("===================================================\n");
+    printf("====================================================================================================\n");
 }
 
 void printReports()

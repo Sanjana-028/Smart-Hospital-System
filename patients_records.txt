@@ -1,0 +1,9 @@
+PAT-1001,R.A.Tharusha SIhan Sanjana,21,1,Paediatrics26500.00
+PAT-1001,R.A.Tharush Sihan Sanjana,21,1,Paediatrics20500.00
+PAT-1002,R.A.Wanindu HAsaranga de Silva,29,2,Cardiology29400.00
+PAT-1001,tharusha,21,1,Paediatrics14500.00
+PAT-1002,wanindu hasaranga de silve,23,2,General Practice (OPD)19800.00
+PAT-1001,R.A.Tharusha Sihan Sanjana,21,1,General Practice (OPD)10500.00
+PAT-1002,A.B.Wanindu Hasaranga de Silva,29,2,Paediatrics15000.00
+PAT-1003,H.K.Lahiru Udara,27,3,Cardiology30750.00
+PAT-1004,Mahinda Rajapaksha,80,2,Neurology175100.00
